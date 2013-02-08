@@ -5,7 +5,7 @@ debug_inspector
 
 _A Ruby wrapper for the new MRI 2.0 debug\_inspector API_
 
-** This library only works on MRI 2.0. Requiring it on unsupported Rubies will resort in a no-op **
+**This library only works on MRI 2.0. Requiring it on unsupported Rubies will result in a no-op**
 
 Usage
 -----
