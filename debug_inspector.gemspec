@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.version = DebugInspector::VERSION
   s.authors = ["John Mair (banisterfiend)"]
   s.email = ["jrmair@gmail.com"]
-  s.homepage = "https//github.com/banister/debug_inspector"
+  s.homepage = "https://github.com/banister/debug_inspector"
   s.summary = "Ruby wrapper for MRI 2.0 DebugInspector API"
   s.description = s.summary
   s.files         = `git ls-files`.split("\n")
