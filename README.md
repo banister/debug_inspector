@@ -13,17 +13,24 @@ Usage
 ```ruby
 require 'debug_inspector'
 
-# binding of nth caller frame (returns a Binding object)
-RubyVM::DebugInspector.open { |i| i.frame_binding(n) }
+# Open debug context
+# Passed `dc' is only active in a block
+RubyVM::DebugInspector.open { |dc|
+  # backtrace locations (returns an array of Thread::Backtrace::Location objects)
+  locs = dc.backtrace_locations
 
-# iseq of nth caller frame (returns a RubyVM::InstructionSequence object)
-RubyVM::DebugInspector.open { |i| i.frame_iseq(n) }
+  # you can get depth of stack frame with `locs.size'
+  locs.size.times do |i|
+    # binding of i-th caller frame (returns a Binding object or nil)
+    p dc.frame_binding(i)
 
-# class of nth caller frame
-RubyVM::DebugInspector.open { |i| i.frame_class(n) }
+    # iseq of i-th caller frame (returns a RubyVM::InstructionSequence object or nil)
+    p dc.frame_iseq(i)
 
-# backtrace locations (returns an array of Thread::Backtrace::Location objects)
-RubyVM::DebugInspector.open { |i| i.backtrace_locations }
+    # class of i-th caller frame
+    p dc.frame_class(i)
+  end
+}
 ```
 
 Contact
@@ -36,7 +43,7 @@ License
 
 (The MIT License)
 
-Copyright (c) 2012 (John Mair)
+Copyright (c) 2012-2013 (John Mair)
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
