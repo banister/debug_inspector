@@ -10,15 +10,7 @@
 **********************************************************************/
 
 #include "ruby/ruby.h"
-
-typedef struct rb_debug_inspector_struct rb_debug_inspector_t;
-typedef VALUE (*rb_debug_inspector_func_t)(const rb_debug_inspector_t *, void *);
-
-VALUE rb_debug_inspector_open(rb_debug_inspector_func_t func, void *data);
-VALUE rb_debug_inspector_frame_binding_get(const rb_debug_inspector_t *dc, int index);
-VALUE rb_debug_inspector_frame_class_get(const rb_debug_inspector_t *dc, int index);
-VALUE rb_debug_inspector_frame_iseq_get(const rb_debug_inspector_t *dc, int index);
-VALUE rb_debug_inspector_backtrace_locations(const rb_debug_inspector_t *dc);
+#include "ruby/debug.h"
 
 static size_t
 di_size(const void *dummy)
@@ -37,7 +29,7 @@ di_get_dc(VALUE self)
     const rb_debug_inspector_t *dc;
     TypedData_Get_Struct(self, const rb_debug_inspector_t, &di_data_type, dc);
     if (dc == 0) {
-	rb_raise(rb_eArgError, "invalid inspector context");
+	rb_raise(rb_eArgError, "invalid debug context");
     }
     return dc;
 }
