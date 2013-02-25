@@ -29,7 +29,7 @@ di_get_dc(VALUE self)
     const rb_debug_inspector_t *dc;
     TypedData_Get_Struct(self, const rb_debug_inspector_t, &di_data_type, dc);
     if (dc == 0) {
-	rb_raise(rb_eArgError, "invalid inspector context");
+	rb_raise(rb_eArgError, "invalid debug context");
     }
     return dc;
 }
