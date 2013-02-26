@@ -3,10 +3,13 @@ debug_inspector
 
 _A Ruby wrapper for the new MRI 2.0 debug\_inspector API_
 
-The `debug_inspector` C extension and API were designed and built by [Koichi Sasada](https://github.com/ko1), this project 
+The `debug_inspector` C extension and API were designed and built by [Koichi Sasada](https://github.com/ko1), this project
 is just a gemification of his work.
 
-**This library only works on MRI 2.0. Requiring it on unsupported Rubies will result in a no-op**
+**NOTES:**
+
+* This library makes use of the new debug inspector API in MRI 2.0.0, **do not use this library outside of debugging situations**.
+* Only works on MRI 2.0. Requiring it on unsupported Rubies will result in a no-op
 
 Usage
 -----
@@ -33,10 +36,6 @@ RubyVM::DebugInspector.open { |dc|
   end
 }
 ```
-
-Note that this libary using new debug inspector API introduced from Ruby 
-2.0.0. This API is too slow, and do not use this library except debug 
-purpose.
 
 Contact
 -------
