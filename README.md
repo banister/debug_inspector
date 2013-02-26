@@ -34,6 +34,10 @@ RubyVM::DebugInspector.open { |dc|
 }
 ```
 
+Note that this libary using new debug inspector API introduced from Ruby 
+2.0.0. This API is too slow, and do not use this library except debug 
+purpose.
+
 Contact
 -------
 
