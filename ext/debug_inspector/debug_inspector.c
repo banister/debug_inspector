@@ -63,6 +63,13 @@ di_frame_iseq(VALUE self, VALUE index)
 }
 
 static VALUE
+di_frame_self(VALUE self, VALUE index)
+{
+    const rb_debug_inspector_t *dc = di_get_dc(self);
+    return rb_debug_inspector_frame_self_get(dc, NUM2INT(index));
+}
+
+static VALUE
 breakpoint_i(const rb_debug_inspector_t *dc, void *ptr)
 {
     VALUE self = (VALUE)ptr;
@@ -106,4 +113,5 @@ Init_debug_inspector(void)
     rb_define_method(cDebugInspector, "frame_binding", di_binding, 1);
     rb_define_method(cDebugInspector, "frame_class", di_frame_class, 1);
     rb_define_method(cDebugInspector, "frame_iseq", di_frame_iseq, 1);
+    rb_define_method(cDebugInspector, "frame_self", di_frame_self, 1);
 }
