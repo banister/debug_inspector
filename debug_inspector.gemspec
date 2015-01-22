@@ -12,4 +12,5 @@ Gem::Specification.new do |s|
   s.files         = `git ls-files`.split("\n")
   s.platform = Gem::Platform::RUBY
   s.extensions = ["ext/debug_inspector/extconf.rb"]
+  s.license = 'MIT'
 end
