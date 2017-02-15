@@ -1,6 +1,7 @@
 $:.unshift 'lib'
 require 'rake/clean'
 require "debug_inspector/version"
+require 'rake/testtask'
 
 dlext = RbConfig::CONFIG['DLEXT']
 direc = File.expand_path(File.dirname(__FILE__))
@@ -8,18 +9,21 @@ CLOBBER.include("**/*.#{dlext}", "**/*~", "**/*#*", "**/*.log", "**/*.o")
 CLEAN.include("ext/**/*.#{dlext}", "ext/**/*.log", "ext/**/*.o",
               "ext/**/*~", "ext/**/*#*", "ext/**/*.obj", "**/*#*", "**/*#*.*",
               "ext/**/*.def", "ext/**/*.pdb", "**/*_flymake*.*", "**/*_flymake", "**/*.rbc")
+
+Rake::TestTask.new(:test) do |t|
+  t.libs << "test"
+  t.test_files = FileList["test/**/*_test.rb"]
+  t.warning = true
+  t.verbose = true
+end
+
 desc "Show version"
 task :version do
   puts "debug_inspector version: #{DebugInspector::VERSION}"
 end
 
 desc "run tests"
-task :default => [:test]
-
-desc "Run tests"
-task :test do
-  sh "bacon -Itest -rubygems -a -q"
-end
+task :default => [:compile, :test]
 
 task :pry do
   puts "loading debug_inspector into pry"
