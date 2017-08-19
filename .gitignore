@@ -1,0 +1,4 @@
+*.o
+*.bundle
+Gemfile.lock
+Makefile
