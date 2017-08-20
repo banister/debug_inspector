@@ -14,6 +14,7 @@ class BasicTest < MiniTest::Test
   def test_frame_binding
     RubyVM::DebugInspector.open do |dc|
       assert_equal self, dc.frame_binding(1).eval("self")
+      assert_equal __method__, dc.frame_binding(1).eval("__method__")
     end
   end
 
