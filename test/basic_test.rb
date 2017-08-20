@@ -22,4 +22,10 @@ class BasicTest < MiniTest::Test
       assert_equal self.class, dc.frame_class(1)
     end
   end
+
+  def test_frame_iseq
+    RubyVM::DebugInspector.open do |dc|
+      assert_equal __FILE__, dc.frame_iseq(1).path
+    end
+  end
 end
