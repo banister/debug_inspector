@@ -8,6 +8,7 @@ class BasicTest < MiniTest::Test
   def test_backtrace_locations
     RubyVM::DebugInspector.open do |dc|
       assert dc.backtrace_locations.size > 0
+      dc.backtrace_locations.each{|e| assert_instance_of Thread::Backtrace::Location, e}
     end
   end
 
