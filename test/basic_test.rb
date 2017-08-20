@@ -1,7 +1,7 @@
 require_relative "test_helper"
 class BasicTest < MiniTest::Test
   def test_version
-    assert(DebugInspector::VERSION)
+    assert(RubyVM::DebugInspector::VERSION)
   end
 
   def test_backtrace_locations
