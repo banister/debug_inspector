@@ -1,6 +1,6 @@
 $:.unshift 'lib'
 require 'rake/clean'
-require "debug_inspector/version"
+require "rubyvm/debug_inspector/version"
 require 'rake/testtask'
 
 dlext = RbConfig::CONFIG['DLEXT']
@@ -27,23 +27,23 @@ task :default => [:compile, :test]
 
 task :pry do
   puts "loading debug_inspector into pry"
-  sh "pry -r #{direc}/lib/debug_inspector"
+  sh "pry -r #{direc}/lib/rubyvm/debug_inspector"
 end
 
 desc "build the binaries"
 task :compile do
-  chdir "#{direc}/ext/debug_inspector/" do
+  chdir "#{direc}/ext/rubyvm/debug_inspector/" do
     sh "ruby extconf.rb"
     sh "make clean"
     sh "make"
-    sh "cp *.#{dlext} ../../lib/"
+    sh "cp *.#{dlext} ../../../lib/rubyvm/"
   end
 end
 
 desc 'cleanup the extensions'
 task :cleanup do
   sh "rm -rf lib/debug_inspector.#{dlext}"
-  chdir "#{direc}/ext/debug_inspector/" do
+  chdir "#{direc}/ext/rubyvm/debug_inspector/" do
     sh 'make clean' rescue nil
   end
 end
