@@ -1,6 +1,5 @@
 $:.unshift 'lib'
 require 'rake/clean'
-require "rubyvm/debug_inspector/version"
 require 'rake/testtask'
 
 dlext = RbConfig::CONFIG['DLEXT']
@@ -19,6 +18,7 @@ end
 
 desc "Show version"
 task :version do
+  require "rubyvm/debug_inspector/version"
   puts "debug_inspector version: #{DebugInspector::VERSION}"
 end
 
@@ -27,7 +27,7 @@ task :default => [:compile, :test]
 
 task :pry do
   puts "loading debug_inspector into pry"
-  sh "pry -r #{direc}/lib/rubyvm/debug_inspector"
+  sh "pry -Ilib -rdebug_inspector"
 end
 
 desc "build the binaries"
@@ -50,6 +50,7 @@ end
 
 desc "(re)install gem"
 task :reinstall => :gem do
+  require "rubyvm/debug_inspector/version"
   sh "gem uninstall debug_inspector" rescue nil
   sh "gem install -l #{direc}/debug_inspector-#{DebugInspector::VERSION}.gem"
 end
