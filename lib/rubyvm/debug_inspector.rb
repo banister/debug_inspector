@@ -1,3 +1,4 @@
+require_relative "debug_inspector/version"
 require 'rbconfig'
 dlext = RbConfig::CONFIG['DLEXT']
 begin
