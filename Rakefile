@@ -19,7 +19,7 @@ end
 desc "Show version"
 task :version do
   require "rubyvm/debug_inspector/version"
-  puts "debug_inspector version: #{DebugInspector::VERSION}"
+  puts "debug_inspector version: #{RubyVM::DebugInspector::VERSION}"
 end
 
 desc "run tests"
