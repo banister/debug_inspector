@@ -1,9 +1,1 @@
-require 'rbconfig'
-
-dlext = RbConfig::CONFIG['DLEXT']
-
-begin
-  require "debug_inspector.#{dlext}"
-rescue LoadError
-end
-
+require_relative "rubyvm/debug_inspector"
