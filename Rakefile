@@ -52,7 +52,7 @@ desc "(re)install gem"
 task :reinstall => :gem do
   require "rubyvm/debug_inspector/version"
   sh "gem uninstall debug_inspector" rescue nil
-  sh "gem install -l #{direc}/debug_inspector-#{DebugInspector::VERSION}.gem"
+  sh "gem install -l #{direc}/debug_inspector-#{RubyVM::DebugInspector::VERSION}.gem"
 end
 
 task :install => :reinstall
