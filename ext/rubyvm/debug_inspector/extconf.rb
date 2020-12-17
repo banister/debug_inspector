@@ -1,5 +1,3 @@
-require "mkmf"
-
 def fake_makefile
   File.open(File.join(File.dirname(__FILE__), "Makefile"), "w") {|f|
     f.puts %[install:\n\techo "This Ruby not supported by/does not require debug_inspector.\n"]
@@ -11,7 +9,6 @@ def mri_2_or_3?
     RUBY_VERSION =~ /^[23]/
 end
 
-  
 if mri_2_or_3?
   require 'mkmf'
   create_makefile('debug_inspector')
