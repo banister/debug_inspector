@@ -27,7 +27,13 @@ jobs:
           - "2.5"
           - "2.6"
           - "2.7"
-          # - "3.0.0-preview2"
+          - "3.0.0-preview2"
+          - "head"
+        exclude:
+          # Windows doesn't have 3.0 previews, so run head there but nowhere else
+          - { ruby: "head", os: "macos-latest" }
+          - { ruby: "head", os: "ubuntu-latest" }
+          - { ruby: "3.0.0-preview2", os: "windows-latest" }
 
     steps:
 
