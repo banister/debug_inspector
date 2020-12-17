@@ -1,4 +1,7 @@
-debug_inspector [![Build Status](https://travis-ci.org/banister/debug_inspector.svg?branch=master)](https://travis-ci.org/banister/debug_inspector)
+[![Build Status](https://github.com/banister/debug_inspector/workflows/test/badge.svg?event=push&branch=master)](https://github.com/banister/debug_inspector/actions?query=branch%3Amaster)
+[![Gem Version](https://img.shields.io/gem/v/debug_inspector.svg)](https://rubygems.org/gems/debug_inspector)
+
+debug_inspector
 ===============
 
 _A Ruby wrapper for the new MRI 2.0 debug\_inspector API_
