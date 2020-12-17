@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = "debug_inspector"
-  spec.version       = "0.0.3"
+  spec.version       = "1.0.0"
   spec.authors       = ["John Mair (banisterfiend)"]
   spec.email         = ["jrmair@gmail.com"]
 
