@@ -1,4 +1,4 @@
-[![Build Status](https://github.com/banister/debug_inspector/workflows/test/badge.svg?event=push&branch=master)](https://github.com/banister/debug_inspector/actions?query=branch%3Amaster)
+[![Build Status](https://github.com/banister/debug_inspector/workflows/Test/badge.svg?branch=master&event=push)](https://github.com/banister/debug_inspector/actions?query=branch%3Amaster)
 [![Gem Version](https://img.shields.io/gem/v/debug_inspector.svg)](https://rubygems.org/gems/debug_inspector)
 
 debug_inspector
@@ -13,7 +13,7 @@ is just a gemification of his work.
 
 * **Do not use this library outside of debugging situations**.
 * This library makes use of the debug inspector API which was new in MRI 2.0.0.
-* Only works on MRI 2.0 and 3.0. Requiring it on unsupported Rubies will result in a no-op
+* Only works on MRI 2 and 3. Requiring it on unsupported Rubies will result in a no-op
 
 Usage
 -----
