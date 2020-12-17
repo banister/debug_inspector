@@ -13,7 +13,7 @@ require "rake/extensiontask"
 
 task :build => :compile
 
-Rake::ExtensionTask.new("rubyvm/debug_inspector") do |ext|
+Rake::ExtensionTask.new("debug_inspector") do |ext|
   ext.lib_dir = "lib"
 end
 

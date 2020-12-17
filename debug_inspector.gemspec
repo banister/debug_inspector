@@ -21,5 +21,5 @@ Gem::Specification.new do |spec|
   end
 
   spec.require_paths = ["lib"]
-  spec.extensions    = ["ext/rubyvm/debug_inspector/extconf.rb"]
+  spec.extensions    = ["ext/debug_inspector/extconf.rb"]
 end
