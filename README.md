@@ -1,4 +1,7 @@
-debug_inspector [![Build Status](https://travis-ci.org/banister/debug_inspector.svg?branch=master)](https://travis-ci.org/banister/debug_inspector)
+[![Build Status](https://github.com/banister/debug_inspector/workflows/test/badge.svg?event=push&branch=master)](https://github.com/banister/debug_inspector/actions?query=branch%3Amaster)
+[![Gem Version](https://img.shields.io/gem/v/debug_inspector.svg)](https://rubygems.org/gems/debug_inspector)
+
+debug_inspector
 ===============
 
 _A Ruby wrapper for the new MRI 2.0 debug\_inspector API_
@@ -36,6 +39,13 @@ RubyVM::DebugInspector.open { |dc|
   end
 }
 ```
+
+Development
+-----------
+
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 Contact
 -------
