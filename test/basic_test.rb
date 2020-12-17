@@ -1,4 +1,5 @@
-require_relative "test_helper"
+require "test_helper"
+
 class BasicTest < MiniTest::Test
   def test_version
     assert(RubyVM::DebugInspector::VERSION)

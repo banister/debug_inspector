@@ -1,3 +1,5 @@
+require "mkmf"
+
 def fake_makefile
   File.open(File.join(File.dirname(__FILE__), "Makefile"), "w") {|f|
     f.puts %[install:\n\techo "Nada."]

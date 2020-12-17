@@ -1,77 +1,20 @@
-$:.unshift 'lib'
-require 'rake/clean'
-require 'rake/testtask'
-
-dlext = RbConfig::CONFIG['DLEXT']
-direc = File.expand_path(File.dirname(__FILE__))
-CLOBBER.include("**/*.#{dlext}", "**/*~", "**/*#*", "**/*.log", "**/*.o")
-CLEAN.include("ext/**/*.#{dlext}", "ext/**/*.log", "ext/**/*.o",
-              "ext/**/*~", "ext/**/*#*", "ext/**/*.obj", "**/*#*", "**/*#*.*",
-              "ext/**/*.def", "ext/**/*.pdb", "**/*_flymake*.*", "**/*_flymake", "**/*.rbc")
+require "bundler/gem_tasks"
+require "rake/testtask"
 
 Rake::TestTask.new(:test) do |t|
   t.libs << "test"
+  t.libs << "lib"
   t.test_files = FileList["test/**/*_test.rb"]
   t.warning = true
   t.verbose = true
 end
 
-desc "Show version"
-task :version do
-  require "rubyvm/debug_inspector/version"
-  puts "debug_inspector version: #{RubyVM::DebugInspector::VERSION}"
+require "rake/extensiontask"
+
+task :build => :compile
+
+Rake::ExtensionTask.new("rubyvm/debug_inspector") do |ext|
+  ext.lib_dir = "lib"
 end
 
-desc "run tests"
-task :default => [:compile, :test]
-
-task :pry do
-  puts "loading debug_inspector into pry"
-  sh "pry -Ilib -rdebug_inspector"
-end
-
-desc "build the binaries"
-task :compile do
-  chdir "#{direc}/ext/rubyvm/debug_inspector/" do
-    sh "ruby extconf.rb"
-    sh "make clean"
-    sh "make"
-    sh "cp *.#{dlext} ../../../lib/rubyvm/"
-  end
-end
-
-desc 'cleanup the extensions'
-task :cleanup do
-  sh "rm -rf lib/debug_inspector.#{dlext}"
-  chdir "#{direc}/ext/rubyvm/debug_inspector/" do
-    sh 'make clean' rescue nil
-  end
-end
-
-desc "(re)install gem"
-task :reinstall => :gem do
-  require "rubyvm/debug_inspector/version"
-  sh "gem uninstall debug_inspector" rescue nil
-  sh "gem install -l #{direc}/debug_inspector-#{RubyVM::DebugInspector::VERSION}.gem"
-end
-
-task :install => :reinstall
-
-desc "build all platform gems at once"
-task :gem => [:clean, :rmgems] do
-  sh "gem build #{direc}/debug_inspector.gemspec"
-end
-
-desc "remove all platform gems"
-task :rmgems do
-  sh "rm #{direc}/*.gem" rescue nil
-end
-
-desc "build and push latest gems"
-task :pushgems => :gem do
-  chdir(direc) do
-    Dir["*.gem"].each do |gemfile|
-      sh "gem push #{gemfile}"
-    end
-  end
-end
+task :default => [:clobber, :compile, :test]
