@@ -11,6 +11,7 @@ on:
 
 jobs:
   test:
+    name: "Unit"
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -47,3 +48,32 @@ jobs:
 
     - name: Test
       run: bundle exec rake
+
+  installation:
+    name: "Installation"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+        ruby:
+          - "2"
+          - "head"
+          - "jruby"
+          - "truffleruby"
+
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+        bundler-cache: true
+
+    - name: Install gem
+      run: bundle exec rake install
