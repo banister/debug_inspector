@@ -29,21 +29,29 @@ jobs:
           - "2.6"
           - "2.7"
           - "3.0"
-          - "head"
-        exclude:
-          # Windows doesn't have 3.0, so run head there but nowhere else.
-          - { ruby: "head", os: "macos-latest" }
-          - { ruby: "head", os: "ubuntu-latest" }
-          - { ruby: "3.0", os: "windows-latest" }
 
     steps:
 
     - uses: actions/checkout@v2
 
+    - name: Determine ruby version name
+      id: ruby_version
+      run: |
+        if [[ $OS == 'windows-latest' && $RUBY == '3.0' ]]; then
+          # Windows doesn't have 3.0, so run head there but nowhere else.
+          echo "::set-output name=release::head"
+        else
+          echo "::set-output name=release::$RUBY"
+        fi
+      shell: bash
+      env:
+        OS: ${{ matrix.os }}
+        RUBY: ${{ matrix.ruby }}
+
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: ${{ matrix.ruby }}
+        ruby-version: ${{ steps.ruby_version.outputs.release }}
         bundler-cache: true
 
     - name: Test
@@ -62,14 +70,9 @@ jobs:
         ruby:
           - "2"
           - "3.0"
-          - "head"
           - "jruby"
           - "truffleruby"
         exclude:
-          # Windows doesn't have 3.0, so run head there but nowhere else.
-          - { ruby: "head", os: "macos-latest" }
-          - { ruby: "head", os: "ubuntu-latest" }
-          - { ruby: "3.0", os: "windows-latest" }
           # Windows releases of jruby and truffleruby have issues. Skip them for now.
           - { ruby: "jruby", os: "windows-latest" }
           - { ruby: "truffleruby", os: "windows-latest" }
@@ -78,10 +81,24 @@ jobs:
 
     - uses: actions/checkout@v2
 
+    - name: Determine ruby version name
+      id: ruby_version
+      run: |
+        if [[ $OS == 'windows-latest' && $RUBY == '3.0' ]]; then
+          # Windows doesn't have 3.0, so run head there but nowhere else.
+          echo "::set-output name=release::head"
+        else
+          echo "::set-output name=release::$RUBY"
+        fi
+      shell: bash
+      env:
+        OS: ${{ matrix.os }}
+        RUBY: ${{ matrix.ruby }}
+
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: ${{ matrix.ruby }}
+        ruby-version: ${{ steps.ruby_version.outputs.release }}
         bundler-cache: true
 
     - name: Install gem
