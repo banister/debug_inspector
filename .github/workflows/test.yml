@@ -94,5 +94,9 @@ jobs:
       run: echo "gem 'debug_inspector'" > Gemfile
       working-directory: ./tmp/gem-test
 
-    - name: Test gem
+    - name: Test gem load
+      run: bundle exec ruby -e "require 'debug_inspector'"
+
+    - name: Test gem functionality
+      if: ${{ matrix.ruby != 'jruby' && matrix.ruby != 'truffleruby' }}
       run: bundle exec ruby -e "require 'debug_inspector'; RubyVM::DebugInspector.open { |dc| dc.frame_binding(1) }"
