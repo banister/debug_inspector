@@ -28,13 +28,13 @@ jobs:
           - "2.5"
           - "2.6"
           - "2.7"
-          - "3.0.0-preview2"
+          - "3.0"
           - "head"
         exclude:
-          # Windows doesn't have 3.0 previews, so run head there but nowhere else
+          # Windows doesn't have 3.0, so run head there but nowhere else.
           - { ruby: "head", os: "macos-latest" }
           - { ruby: "head", os: "ubuntu-latest" }
-          - { ruby: "3.0.0-preview2", os: "windows-latest" }
+          - { ruby: "3.0", os: "windows-latest" }
 
     steps:
 
@@ -61,9 +61,18 @@ jobs:
           - windows-latest
         ruby:
           - "2"
+          - "3.0"
           - "head"
           - "jruby"
           - "truffleruby"
+        exclude:
+          # Windows doesn't have 3.0, so run head there but nowhere else.
+          - { ruby: "head", os: "macos-latest" }
+          - { ruby: "head", os: "ubuntu-latest" }
+          - { ruby: "3.0", os: "windows-latest" }
+          # Windows releases of jruby and truffleruby have issues. Skip them for now.
+          - { ruby: "jruby", os: "windows-latest" }
+          - { ruby: "truffleruby", os: "windows-latest" }
 
     steps:
 
