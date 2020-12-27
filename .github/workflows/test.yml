@@ -49,8 +49,8 @@ jobs:
     - name: Test
       run: bundle exec rake
 
-  installation:
-    name: "Installation"
+  system:
+    name: "System"
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -86,3 +86,13 @@ jobs:
 
     - name: Install gem
       run: bundle exec rake install
+
+    - name: Create directory for gem test
+      run: mkdir -p tmp/gem-test
+
+    - name: Create test Gemfile
+      run: echo "gem 'debug_inspector'" > Gemfile
+      working-directory: ./tmp/gem-test
+
+    - name: Test gem
+      run: bundle exec ruby -e "require 'debug_inspector'; RubyVM::DebugInspector.open { |dc| dc.frame_binding(1) }"
