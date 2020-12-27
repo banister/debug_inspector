@@ -1,8 +1,8 @@
-require_relative "lib/rubyvm/debug_inspector/version"
+# We don't want to define any constants if the gem extension isn't loaded, so not requiring the version file.
 
 Gem::Specification.new do |spec|
   spec.name          = "debug_inspector"
-  spec.version       = RubyVM::DebugInspector::VERSION
+  spec.version       = "0.0.3"
   spec.authors       = ["John Mair (banisterfiend)"]
   spec.email         = ["jrmair@gmail.com"]
 
@@ -21,5 +21,8 @@ Gem::Specification.new do |spec|
   end
 
   spec.require_paths = ["lib"]
-  spec.extensions    = ["ext/debug_inspector/extconf.rb"]
+
+  if RUBY_ENGINE == "ruby"
+    spec.extensions = ["ext/debug_inspector/extconf.rb"]
+  end
 end

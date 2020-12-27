@@ -1,6 +1,8 @@
 def fake_makefile
-  File.open(File.join(File.dirname(__FILE__), "Makefile"), "w") {|f|
-    f.puts %[install:\n\techo "This Ruby not supported by/does not require debug_inspector.\n"]
+  File.open("Makefile", "w") { |f|
+    f.puts '.PHONY: install'
+    f.puts 'install:'
+    f.puts "\t" + '@echo "This Ruby not supported by/does not require debug_inspector."'
   }
 end
 
