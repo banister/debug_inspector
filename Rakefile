@@ -22,6 +22,4 @@ else
   task :default => [:test]
 end
 
-Rake::ExtensionTask.new("debug_inspector") do |ext|
-  ext.lib_dir = "lib"
-end
+Rake::ExtensionTask.new("debug_inspector")
