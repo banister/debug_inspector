@@ -111,6 +111,9 @@ jobs:
       run: echo "gem 'debug_inspector'" > Gemfile
       working-directory: ./tmp/gem-test
 
+    - name: List gem contents
+      run: find $(bundle show debug_inspector)
+
     - name: Test gem load
       run: bundle exec ruby -e "require 'debug_inspector'"
 
