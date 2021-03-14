@@ -102,7 +102,9 @@ jobs:
         bundler-cache: true
 
     - name: Install gem
-      run: bundle exec rake install
+      run: |
+        bundle exec gem build debug_inspector.gemspec
+        gem install debug_inspector*.gem
 
     - name: Create directory for gem test
       run: mkdir -p tmp/gem-test
