@@ -34,24 +34,10 @@ jobs:
 
     - uses: actions/checkout@v2
 
-    - name: Determine ruby version name
-      id: ruby_version
-      run: |
-        if [[ $OS == 'windows-latest' && $RUBY == '3.0' ]]; then
-          # Windows doesn't have 3.0, so run head there but nowhere else.
-          echo "::set-output name=release::head"
-        else
-          echo "::set-output name=release::$RUBY"
-        fi
-      shell: bash
-      env:
-        OS: ${{ matrix.os }}
-        RUBY: ${{ matrix.ruby }}
-
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: ${{ steps.ruby_version.outputs.release }}
+        ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
 
     - name: Test
@@ -68,6 +54,8 @@ jobs:
           - ubuntu-latest
           - windows-latest
         ruby:
+          # This includes rubies that are not actually extended by this gem.
+          # We want to make sure the gem silently fails to load on those platforms.
           - "2"
           - "3.0"
           - "jruby"
@@ -81,28 +69,17 @@ jobs:
 
     - uses: actions/checkout@v2
 
-    - name: Determine ruby version name
-      id: ruby_version
-      run: |
-        if [[ $OS == 'windows-latest' && $RUBY == '3.0' ]]; then
-          # Windows doesn't have 3.0, so run head there but nowhere else.
-          echo "::set-output name=release::head"
-        else
-          echo "::set-output name=release::$RUBY"
-        fi
-      shell: bash
-      env:
-        OS: ${{ matrix.os }}
-        RUBY: ${{ matrix.ruby }}
-
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: ${{ steps.ruby_version.outputs.release }}
+        ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
 
+    - name: Build gem
+      run: bundle exec gem build --verbose debug_inspector.gemspec
+
     - name: Install gem
-      run: bundle exec rake install
+      run: gem install --verbose debug_inspector*.gem
 
     - name: Create directory for gem test
       run: mkdir -p tmp/gem-test
@@ -111,9 +88,25 @@ jobs:
       run: echo "gem 'debug_inspector'" > Gemfile
       working-directory: ./tmp/gem-test
 
+    - name: Get gem installation path
+      id: gem_path
+      run: |
+        gem_path=$(bundle show debug_inspector)
+        echo "gem_path is ${gem_path}"
+        echo "::set-output name=path::${gem_path}"
+      shell: bash
+      working-directory: ./tmp/gem-test
+
+    - name: List installed gem contents
+      run: find .
+      shell: bash
+      working-directory: ${{ steps.gem_path.outputs.path }}
+
     - name: Test gem load
       run: bundle exec ruby -e "require 'debug_inspector'"
+      working-directory: ./tmp/gem-test
 
     - name: Test gem functionality
       if: ${{ matrix.ruby != 'jruby' && matrix.ruby != 'truffleruby' }}
       run: bundle exec ruby -e "require 'debug_inspector'; RubyVM::DebugInspector.open { |dc| dc.frame_binding(1) }"
+      working-directory: ./tmp/gem-test
