@@ -54,6 +54,8 @@ jobs:
           - ubuntu-latest
           - windows-latest
         ruby:
+          # This includes rubies that are not actually extended by this gem.
+          # We want to make sure the gem silently fails to load on those platforms.
           - "2"
           - "3.0"
           - "jruby"
