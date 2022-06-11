@@ -107,6 +107,6 @@ jobs:
       working-directory: ./tmp/gem-test
 
     - name: Test gem functionality
-      if: ${{ matrix.ruby != 'jruby' && matrix.ruby != 'truffleruby' }}
+      if: ${{ matrix.ruby != 'jruby' }}
       run: bundle exec ruby -e "require 'debug_inspector'; RubyVM::DebugInspector.open { |dc| dc.frame_binding(1) }"
       working-directory: ./tmp/gem-test
