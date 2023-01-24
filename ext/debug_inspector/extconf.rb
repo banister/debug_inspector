@@ -6,12 +6,11 @@ def fake_makefile
   }
 end
 
-def mri_2_or_3?
-  defined?(RUBY_ENGINE) && RUBY_ENGINE == "ruby" &&
-    RUBY_VERSION =~ /^[23]/
+def can_compile_extensions?
+  RUBY_ENGINE == "ruby" or RUBY_ENGINE == "truffleruby"
 end
 
-if mri_2_or_3?
+if can_compile_extensions?
   require 'mkmf'
   create_makefile('debug_inspector')
 else
