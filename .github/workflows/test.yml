@@ -29,12 +29,17 @@ jobs:
           - "2.6"
           - "2.7"
           - "3.0"
+          - "3.1"
+          - "3.2"
+          - "truffleruby"
         exclude:
           # 2.2 segfaults on recent Ubuntu: https://github.com/ruby/setup-ruby/issues/496
           - { ruby: "2.2", os: "ubuntu-latest" }
+          # TruffleRuby does not support Windows.
+          - { ruby: "truffleruby", os: "windows-latest" }
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
@@ -63,13 +68,14 @@ jobs:
           - "jruby"
           - "truffleruby"
         exclude:
-          # Windows releases of jruby and truffleruby have issues. Skip them for now.
+          # Windows releases of jruby have issues. Skip them for now.
           - { ruby: "jruby", os: "windows-latest" }
+          # TruffleRuby does not support Windows.
           - { ruby: "truffleruby", os: "windows-latest" }
 
     steps:
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
@@ -109,6 +115,6 @@ jobs:
       working-directory: ./tmp/gem-test
 
     - name: Test gem functionality
-      if: ${{ matrix.ruby != 'jruby' && matrix.ruby != 'truffleruby' }}
-      run: bundle exec ruby -e "require 'debug_inspector'; RubyVM::DebugInspector.open { |dc| dc.frame_binding(1) }"
+      if: ${{ matrix.ruby != 'jruby' }}
+      run: bundle exec ruby -e "require 'debug_inspector'; DebugInspector.open { |dc| dc.frame_binding(1) }"
       working-directory: ./tmp/gem-test

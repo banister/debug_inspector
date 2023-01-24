@@ -104,8 +104,7 @@ di_open_s(VALUE klass)
 void
 Init_debug_inspector(void)
 {
-    VALUE rb_cRubyVM = rb_const_get(rb_cObject, rb_intern("RubyVM"));
-    VALUE cDebugInspector = rb_define_class_under(rb_cRubyVM, "DebugInspector", rb_cObject);
+    VALUE cDebugInspector = rb_define_class("DebugInspector", rb_cObject);
     
     rb_undef_alloc_func(cDebugInspector);
     rb_define_singleton_method(cDebugInspector, "open", di_open_s, 0);

@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{A Ruby wrapper for the MRI 2.0 debug_inspector API}
   spec.description   = <<-TXT
-Adds methods to RubyVM::DebugInspector to allow for inspection of backtrace frames.
+Adds methods to DebugInspector to allow for inspection of backtrace frames.
 
 The debug_inspector C extension and API were designed and built by Koichi Sasada, this project is just a gemification of his work.
 
@@ -31,7 +31,5 @@ TXT
 
   spec.require_paths = ["lib"]
 
-  if RUBY_ENGINE == "ruby"
-    spec.extensions = ["ext/debug_inspector/extconf.rb"]
-  end
+  spec.extensions = ["ext/debug_inspector/extconf.rb"]
 end

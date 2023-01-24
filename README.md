@@ -23,7 +23,7 @@ require 'debug_inspector'
 
 # Open debug context
 # Passed `dc' is only active in a block
-RubyVM::DebugInspector.open { |dc|
+DebugInspector.open { |dc|
   # backtrace locations (returns an array of Thread::Backtrace::Location objects)
   locs = dc.backtrace_locations
 
