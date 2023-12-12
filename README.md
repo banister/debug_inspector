@@ -1,4 +1,4 @@
-[![Build Status](https://github.com/banister/debug_inspector/workflows/Test/badge.svg?branch=master&event=push)](https://github.com/banister/debug_inspector/actions?query=branch%3Amaster)
+[![Build Status](https://github.com/banister/debug_inspector/actions/workflows/test.yml/badge.svg)](https://github.com/banister/debug_inspector/actions/workflows/test.yml)
 [![Gem Version](https://img.shields.io/gem/v/debug_inspector.svg)](https://rubygems.org/gems/debug_inspector)
 
 debug_inspector
