@@ -3,7 +3,11 @@ require "test_helper"
 class BasicTest < Minitest::Test
   def setup
     @offset = DebugInspector.open do |dc|
-      dc.backtrace_locations.index { |loc| loc.path == __FILE__ and loc.label == "setup" }
+      dc.backtrace_locations.index do |loc|
+        # Since Ruby 3.4, a label includes the method owner if there is one.
+        # See also: https://bugs.ruby-lang.org/issues/19117
+        loc.path == __FILE__ and %w[setup BasicTest#setup].include?(loc.label)
+      end
     end
   end
 
